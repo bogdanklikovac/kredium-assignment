@@ -38,7 +38,7 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'advisers',
         ],
     ],
 
@@ -60,9 +60,10 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'advisers' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            //'model' => env('AUTH_MODEL', App\Models\Adviser::class),  // Dynamic model based on .env
+            'model' =>  App\Models\Adviser::class,
         ],
 
         // 'users' => [
