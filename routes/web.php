@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
@@ -18,4 +19,5 @@ Route::middleware('auth')->group(function () {
     Route::get('clients/{client}/edit', [ClientController::class, 'edit'])->name('clients.edit');
     Route::put('clients/{client}', [ClientController::class, 'update'])->name('clients.update');
     Route::delete('clients/{client}', [ClientController::class, 'destroy'])->name('clients.destroy');
+    Route::get('/report', [ReportController::class, 'viewReport'])->name('report.index');
 });
