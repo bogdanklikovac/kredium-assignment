@@ -3,18 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class CashLoanController extends Controller
 {
     use AuthorizesRequests;
-    public function update(Request $request, Client $client)
+
+    /**
+     * @param Request $request
+     * @param Client $client
+     * @return RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function update(Request $request, Client $client): RedirectResponse
     {
         $this->authorize('update', $client);
 
         $request->validate([
-            'cash_loan_amount' => 'required|numeric|min:0',
+            'cash_loan_amount' => 'required|numeric',
         ]);
 
         $client->cashLoan()->updateOrCreate(

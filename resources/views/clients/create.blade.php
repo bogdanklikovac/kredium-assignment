@@ -19,6 +19,15 @@
 
         <form action="{{ route('clients.store') }}" method="POST">
             @csrf
+            @if ($errors->any())
+                <div class="bg-red-100 text-red-700 p-4 mb-4 rounded-md">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <!-- First Name -->
             <div class="mb-4">
                 <label for="first_name" class="block text-lg font-semibold">First Name:</label>

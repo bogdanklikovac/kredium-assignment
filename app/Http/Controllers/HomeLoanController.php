@@ -15,8 +15,8 @@ class HomeLoanController extends Controller
         $this->authorize('update', $client);
 
         $request->validate([
-            'home_loan_property_value' => 'required|numeric|min:0',
-            'home_loan_down_payment' => 'required|numeric|min:0',
+            'home_loan_property_value' => 'required|numeric',
+            'home_loan_down_payment' => 'required|numeric',
         ]);
 
         $client->homeLoan()->updateOrCreate(

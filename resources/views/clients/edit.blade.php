@@ -18,6 +18,15 @@
             <div class="w-2/3">
                 <form action="{{ route('clients.update', $client->id) }}" method="POST" class="mb-8">
                     @csrf
+                    @if ($errors->any())
+                        <div class="bg-red-100 text-red-700 p-4 mb-4 rounded-md">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     @method('PUT')
                     <h2 class="text-xl font-semibold mb-4">Edit Client Information</h2>
                     <div class="mb-4">
@@ -50,7 +59,11 @@
                         <h2 class="text-xl font-semibold mb-4">Cash Loan</h2>
                         <div class="mb-4">
                             <label for="cash_loan_amount" class="block text-lg font-semibold">Loan Amount:</label>
-                            <input type="number" id="cash_loan_amount" name="cash_loan_amount" value="{{ $client->cashLoan->loan_amount ?? '' }}" class="w-full p-3 border border-gray-300 rounded-md">
+                            <input type="number" id="cash_loan_amount" name="cash_loan_amount" value="{{ $client->cashLoan->loan_amount ?? '' }}" class="w-full p-3 border border-gray-300 rounded-md" min="0">
+                            <!-- Added validation for non-negative value -->
+                            @error('cash_loan_amount')
+                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
                         <button type="submit" class="w-full bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Update Cash Loan</button>
                     </form>
@@ -64,11 +77,11 @@
                         <h2 class="text-xl font-semibold mb-4">Home Loan</h2>
                         <div class="mb-4">
                             <label for="home_loan_property_value" class="block text-lg font-semibold">Property Value:</label>
-                            <input type="number" id="home_loan_property_value" name="home_loan_property_value" value="{{ $client->homeLoan->property_value ?? '' }}" class="w-full p-3 border border-gray-300 rounded-md">
+                            <input type="number" id="home_loan_property_value" name="home_loan_property_value" value="{{ $client->homeLoan->property_value ?? '' }}" class="w-full p-3 border border-gray-300 rounded-md" min="0">
                         </div>
                         <div class="mb-4">
                             <label for="home_loan_down_payment" class="block text-lg font-semibold">Down Payment:</label>
-                            <input type="number" id="home_loan_down_payment" name="home_loan_down_payment" value="{{ $client->homeLoan->down_payment_amount ?? '' }}" class="w-full p-3 border border-gray-300 rounded-md">
+                            <input type="number" id="home_loan_down_payment" name="home_loan_down_payment" value="{{ $client->homeLoan->down_payment_amount ?? '' }}" class="w-full p-3 border border-gray-300 rounded-md" min="0">
                         </div>
                         <button type="submit" class="w-full bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Update Home Loan</button>
                     </form>

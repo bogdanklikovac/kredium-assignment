@@ -4,10 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\CashLoan;
 use App\Models\HomeLoan;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\Response;
 
 class ReportController extends Controller
 {
-    public function viewReport()
+    /**
+     * @return View|Factory|Application
+     */
+    public function viewReport(): View|Factory|Application
     {
         // Get the currently logged-in adviser
         $adviser = auth()->id();
@@ -21,13 +29,16 @@ class ReportController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        // Combine both collections
-        $products = $cashLoans->merge($homeLoans);
+        // Combine both collections and sort by created_at (newest to oldest)
+        $products = $cashLoans->merge($homeLoans)->sortByDesc('created_at');
 
         return view('report.index', compact('products'));
     }
 
-    public function exportToCsv()
+    /**
+     * @return ResponseFactory|Application|Response
+     */
+    public function exportToCsv(): Application|Response|ResponseFactory
     {
         // Get the products for the currently logged-in adviser
         $adviserId = auth()->id();
