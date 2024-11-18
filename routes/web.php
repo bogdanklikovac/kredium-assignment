@@ -24,4 +24,5 @@ Route::middleware('auth')->group(function () {
     Route::put('clients/{client}/update-cash-loan', [CashLoanController::class, 'update'])->name('clients.updateCashLoan');
     Route::put('clients/{client}/update-home-loan', [HomeLoanController::class, 'update'])->name('clients.updateHomeLoan');
     Route::get('/report', [ReportController::class, 'viewReport'])->name('report.index');
+    Route::get('/report/export', [ReportController::class, 'exportToCsv'])->name('report.export');
 });

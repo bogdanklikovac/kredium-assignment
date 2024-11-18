@@ -34,29 +34,35 @@
                     <td class="py-2 px-4 text-left">
                         @if ($product instanceof App\Models\CashLoan)
                             {{ number_format($product->loan_amount, 2) }}
-                        @elseif ($product instanceof App\Models\HomeLoan)
-
                         @endif
                     </td>
+
                     <td class="py-2 px-4 text-left">
                         @if ($product instanceof App\Models\HomeLoan)
-                            {{ number_format($product->property_value, 2) }}
-                        @elseif($product->property_value === null)
-
+                            {{ number_format($product->property_value ?? 0, 2) }}
                         @endif
                     </td>
+
                     <td class="py-2 px-4 text-left">
                         @if ($product instanceof App\Models\HomeLoan)
-                            {{ number_format($product->down_payment_amount, 2) }}
-                        @else
-
+                            {{ number_format($product->down_payment_amount ?? 0, 2) }}
                         @endif
                     </td>
+
                     <td class="py-2 px-4 text-left">{{ $product->created_at->format('Y-m-d H:i') }}</td>
                 </tr>
             @endforeach
             </tbody>
         </table>
+
+        <div class="mt-4 flex justify-end">
+            <a href="{{ route('report.export') }}">
+                <button class="px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    Export to CSV
+                </button>
+            </a>
+        </div>
+
     </div>
 </div>
 </body>

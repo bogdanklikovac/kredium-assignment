@@ -12,9 +12,12 @@ class ClientController extends Controller
 
     public function index()
     {
-        $clients = Client::where('adviser_id', auth()->id())->get();
+        // Eager load the related cash_loan and home_loan data for each client
+        $clients = Client::with(['cashLoan', 'homeLoan'])->get();
+
         return view('clients.index', compact('clients'));
     }
+
 
     public function create()
     {
