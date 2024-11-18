@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CashLoanController;
+use App\Http\Controllers\HomeLoanController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -19,5 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::get('clients/{client}/edit', [ClientController::class, 'edit'])->name('clients.edit');
     Route::put('clients/{client}', [ClientController::class, 'update'])->name('clients.update');
     Route::delete('clients/{client}', [ClientController::class, 'destroy'])->name('clients.destroy');
+    Route::put('clients/{client}/update-cash-loan', [CashLoanController::class, 'update'])->name('clients.updateCashLoan');
+    Route::put('clients/{client}/update-home-loan', [HomeLoanController::class, 'update'])->name('clients.updateHomeLoan');
     Route::get('/report', [ReportController::class, 'viewReport'])->name('report.index');
 });
